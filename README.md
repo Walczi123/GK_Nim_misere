@@ -1,0 +1,1 @@
+# GK_Nim_misere
