@@ -23,12 +23,12 @@ namespace Nim_misere.AI
             for (int i = 0; i < this.numberOfIteration; i++)
             {
                 node = rootnode;
-                iterationState = node.state;
                 #region Selection
                 while (node.untriedMoves.Count == 0 && node.childNodes.Count != 0)
                 {
                     node = node.SelectUctChild();
                 }
+                iterationState = node.state;
                 #endregion
                 #region Expansion         
                 if (node.untriedMoves.Any())
