@@ -28,3 +28,18 @@ D:\Repozytoria\GK_Nim_misere\obj\Debug\net6.0\refint\Nim_misere.dll
 D:\Repozytoria\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.pdb
 D:\Repozytoria\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.genruntimeconfig.cache
 D:\Repozytoria\GK_Nim_misere\obj\Debug\net6.0\ref\Nim_misere.dll
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.csproj.AssemblyReference.cache
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.GeneratedMSBuildEditorConfig.editorconfig
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.AssemblyInfoInputs.cache
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.AssemblyInfo.cs
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.csproj.CoreCompileInputs.cache
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.dll
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\ref\Nim_misere.dll
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.pdb
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\bin\Debug\net6.0\Nim_misere.exe
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\bin\Debug\net6.0\Nim_misere.deps.json
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\bin\Debug\net6.0\Nim_misere.runtimeconfig.json
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\bin\Debug\net6.0\Nim_misere.dll
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\bin\Debug\net6.0\Nim_misere.pdb
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\refint\Nim_misere.dll
+C:\Alusia\Politechnika\Gry Kombinatoryczne\GK_Nim_misere\obj\Debug\net6.0\Nim_misere.genruntimeconfig.cache

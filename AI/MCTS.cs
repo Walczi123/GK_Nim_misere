@@ -66,5 +66,10 @@ namespace Nim_misere.AI
         {
             return "MCTS wins !!!";
         }
+
+        public void move_info(Move move)
+        {
+            Console.WriteLine("\nOptimal algorithm choose move: " + move.ToString());
+        }
     }
 }

@@ -42,11 +42,31 @@ namespace Nim_misere.Game
             {
                 PrintStacks();
                 var move = currentPlayer.Move(this.state);
-                this.state.UpdateState(move);
-                currentPlayer = SwitchPlayer(currentPlayer);
+                currentPlayer.move_info(move);
+                if (this.checkMove(move))
+                {
+                    this.state.UpdateState(move);
+                    currentPlayer = SwitchPlayer(currentPlayer);
+                }
+                
             }
 
             Console.WriteLine(currentPlayer.GetWinnerPhrase());
+        }
+
+        private bool checkMove(Move move)
+        {
+            if (move.stackNumber < 1 || move.stackNumber > this.state.Stacks.Count())
+            {
+                Console.WriteLine("Wrong stack number!");
+                return false;
+            }
+            if (move.amount < 1 || move.amount > this.state.Stacks[move.stackNumber-1])
+            {
+                Console.WriteLine("Wrong amount!");
+                return false;
+            }
+            return true;
         }
 
         private IPlayer SwitchPlayer(IPlayer currentPlayer)
@@ -65,6 +85,7 @@ namespace Nim_misere.Game
 
         private void PrintStacks()
         {
+            Console.Write("\n Elements on stacks: \n");
             foreach( var value in this.state.Stacks )
                 Console.Write($"{value} ");
             Console.Write("\n");

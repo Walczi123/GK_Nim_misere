@@ -6,6 +6,7 @@ namespace Nim_misere.Player
     {
         Move Move(State state);
         string GetWinnerPhrase();
+        public void move_info(Move move);
     }
 
     public class Man : IPlayer
@@ -17,13 +18,16 @@ namespace Nim_misere.Player
 
         public Move Move(State state)
         {
-            Console.WriteLine("Enter stack number and amount of pieces: /' 2,3 /'");
+            Console.WriteLine("Enter stack number and amount of pieces to take off: /' 2,3 /'");
             var line = Console.ReadLine();
             var nums = line.Split(',');
             if (Int32.TryParse(nums[0], out var stackNumber) && Int32.TryParse(nums[1], out var amount))
                 return new Move(stackNumber, amount);
             return new Move();
         }
+
+        public void move_info(Move move)
+        { }
 
         public Man() { }
     }
@@ -108,6 +112,12 @@ namespace Nim_misere.Player
         {
             return int1 ^ int2;
         }
+
+        public void move_info(Move move)
+        {
+            Console.WriteLine("\nOptimal algorithm choose move: " + move.ToString());
+        }
+
         public Optimal() { }
     }
 }
