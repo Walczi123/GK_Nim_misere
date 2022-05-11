@@ -27,12 +27,14 @@ namespace Nim_misere.Game
         private IPlayer player1;
         private IPlayer player2;
         private State state;
+        public IPlayer? winner { get; set; }
 
         public NimMisereGame(IPlayer player1, IPlayer player2, State state)
         {
             this.player1 = player1;
             this.player2 = player2;
             this.state = state;
+            this.winner = null;
         }
 
         public void Start()
@@ -50,7 +52,7 @@ namespace Nim_misere.Game
                 }
                 
             }
-
+            this.winner = currentPlayer;
             Console.WriteLine(currentPlayer.GetWinnerPhrase());
         }
 

@@ -71,5 +71,10 @@ namespace Nim_misere.AI
         {
             Console.WriteLine("\nOptimal algorithm choose move: " + move.ToString());
         }
+
+        public string GetName()
+        {
+            return "MCTS";
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace Nim_misere.Player
         Move Move(State state);
         string GetWinnerPhrase();
         public void move_info(Move move);
+        public string GetName();
     }
 
     public class Man : IPlayer
@@ -28,6 +29,11 @@ namespace Nim_misere.Player
 
         public void move_info(Move move)
         { }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
 
         public Man() { }
     }
@@ -116,6 +122,11 @@ namespace Nim_misere.Player
         public void move_info(Move move)
         {
             Console.WriteLine("\nOptimal algorithm choose move: " + move.ToString());
+        }
+
+        public string GetName()
+        {
+            return "OPTIMAL";
         }
 
         public Optimal() { }

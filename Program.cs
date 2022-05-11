@@ -1,6 +1,7 @@
 ﻿using Nim_misere.AI;
 using Nim_misere.Game;
 using Nim_misere.Player;
+using Nim_misere.Test;
 
 namespace Nim
 {
@@ -12,7 +13,29 @@ namespace Nim
             var stackSize = 0;
             var oponent = 0;
             var turn = 0;
+            var mode = 0;
             Console.WriteLine("\n\n");
+
+            while (true)
+            {
+                Console.WriteLine("Do you want to play the game or run tests?\n1 - Play\n2 - Tests");
+                try
+                {
+                    mode = Convert.ToInt32(Console.ReadLine());
+                }
+                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+
+                if (mode != 1 && mode != 2) Console.WriteLine("This number is not amount options. Choose again.\n");
+                else break;
+            }
+            if(mode == 2)
+            {
+                var testRunner = new TestRunner();
+                testRunner.Run();
+                Console.WriteLine("The results are saved in the file ./NIM_MISERIE_RESULTS.csv");
+                return;
+            }
+
             while (true)
             {
                 Console.WriteLine("How many stacks would you like to have?");
