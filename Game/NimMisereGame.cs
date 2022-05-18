@@ -27,14 +27,16 @@ namespace Nim_misere.Game
         private IPlayer player1;
         private IPlayer player2;
         private State state;
+        public bool showResults;
         public IPlayer? winner { get; set; }
 
-        public NimMisereGame(IPlayer player1, IPlayer player2, State state)
+        public NimMisereGame(IPlayer player1, IPlayer player2, State state, bool showResults)
         {
             this.player1 = player1;
             this.player2 = player2;
             this.state = state;
             this.winner = null;
+            this.showResults = showResults;
         }
 
         public void Start()
@@ -42,15 +44,16 @@ namespace Nim_misere.Game
             IPlayer currentPlayer = this.player1;
             while (!this.state.AreEmpty())
             {
-                PrintStacks();
+                if (showResults) PrintStacks();
                 var move = currentPlayer.Move(this.state);
-                currentPlayer.move_info(move);
+                if (showResults) currentPlayer.move_info(move);
                 if (this.checkMove(move))
                 {
                     this.state.UpdateState(move);
                     currentPlayer = SwitchPlayer(currentPlayer);
                 }
-                
+
+
             }
             this.winner = currentPlayer;
             Console.WriteLine(currentPlayer.GetWinnerPhrase());
@@ -85,9 +88,9 @@ namespace Nim_misere.Game
             }             
         }
 
-        private void PrintStacks()
+        public void PrintStacks()
         {
-            Console.Write("\n Elements on stacks: \n");
+            Console.Write("\nElements on stacks: ");
             foreach( var value in this.state.Stacks )
                 Console.Write($"{value} ");
             Console.Write("\n");

@@ -58,18 +58,18 @@ namespace Nim_misere.AI
                 #endregion 
             }
             var m = rootnode.childNodes.OrderByDescending(child => child.visits).First().GetMove();
-            Console.WriteLine($"MCTS makes move : {m.ToString()}");
+            //Console.WriteLine($"MCTS makes move : {m.ToString()}");
             return m;
         }
 
         public string GetWinnerPhrase()
         {
-            return "MCTS wins !!!";
+            return "MCTS has won!";
         }
 
         public void move_info(Move move)
         {
-            Console.WriteLine("\nOptimal algorithm choose move: " + move.ToString());
+            Console.WriteLine("\nAlgorithm choose move: " + move.ToString());
         }
 
         public string GetName()

@@ -19,12 +19,22 @@ namespace Nim_misere.Player
 
         public Move Move(State state)
         {
-            Console.WriteLine("Enter stack number and amount of pieces to take: /' 2,3 /'");
-            var line = Console.ReadLine();
-            var nums = line.Split(',');
-            if (Int32.TryParse(nums[0], out var stackNumber) && Int32.TryParse(nums[1], out var amount))
-                return new Move(stackNumber, amount);
-            return new Move();
+            while (true)
+            {
+                Console.WriteLine("Enter stack number and amount of pieces to take: /' 2,3 /'");
+                var line = Console.ReadLine();
+                var nums = line.Split(',');
+                if (nums.Length != 2)
+                {
+                    Console.WriteLine("That is not a correct input");
+                    continue;
+                }
+
+                if (Int32.TryParse(nums[0], out var stackNumber) && Int32.TryParse(nums[1], out var amount))
+                    return new Move(stackNumber, amount);
+                return new Move();
+            }
+            
         }
 
         public void move_info(Move move)
@@ -121,7 +131,7 @@ namespace Nim_misere.Player
 
         public void move_info(Move move)
         {
-            Console.WriteLine("\nOptimal algorithm chose move: " + move.ToString());
+            Console.WriteLine("\nAlgorithm chose move: " + move.ToString());
         }
 
         public string GetName()

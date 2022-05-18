@@ -18,23 +18,31 @@ namespace Nim
 
             while (true)
             {
-                Console.WriteLine("Do you want to play the game or run tests?\n1 - Play\n2 - Tests");
+                Console.WriteLine("Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Tests\n3 - Test on choosen board");
                 try
                 {
                     mode = Convert.ToInt32(Console.ReadLine());
                 }
                 catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
 
-                if (mode != 1 && mode != 2) Console.WriteLine("This number is not one of the options. Choose again.\n");
+                if (mode != 1 && mode != 2 && mode != 3) Console.WriteLine("This number is not one of the options. Choose again.\n");
                 else break;
             }
             if(mode == 2)
             {
                 var testRunner = new TestRunner();
                 testRunner.Run();
-                Console.WriteLine("The results are saved in the file ./NIM_MISERIE_RESULTS.csv");
+                Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
                 return;
             }
+            if (mode == 3)
+            {
+                var testRunner = new SetBoardTestRunner();
+                testRunner.Run();
+                Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
+                return;
+            }
+            
 
             while (true)
             {
@@ -109,14 +117,14 @@ namespace Nim
             NimMisereGame game;
             if (oponent == 1)
                 if (turn == 1)  
-                    game = new NimMisereGame(new Man(), new Optimal(), state);
+                    game = new NimMisereGame(new Man(), new Optimal(), state, true);
                 else
-                    game = new NimMisereGame(new Optimal(), new Man(), state);
+                    game = new NimMisereGame(new Optimal(), new Man(), state, true);
             else
                 if (turn == 1)
-                    game = new NimMisereGame(new Man(), new MCTS(), state);
+                    game = new NimMisereGame(new Man(), new MCTS(), state, true);
                 else
-                    game = new NimMisereGame(new MCTS(), new Man(), state); 
+                    game = new NimMisereGame(new MCTS(), new Man(), state, true); 
             game.Start();
 
             Console.WriteLine("Bye");
