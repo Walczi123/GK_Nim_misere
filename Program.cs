@@ -54,6 +54,7 @@ namespace Nim
                 Console.WriteLine("How many elements should be on the stacks? /'E.g. 2,3,4 /'");
                 try
                 {
+                    stackSizes = new List<int>();
                     var answer = Console.ReadLine();
                     if (answer == null)
                         throw new Exception("Empty answer.");
@@ -66,7 +67,12 @@ namespace Nim
                         if (pars == false)
                             throw new Exception("Not a number.");
                         else
-                            stackSizes.Add(res);
+                        {
+                            if(res > 0)
+                                stackSizes.Add(res);
+                            else
+                                throw new Exception("Negative number.");
+                        }                            
                     }
                 }
                 catch { Console.WriteLine("This is not a valid option. Choose again.\n"); continue; }
