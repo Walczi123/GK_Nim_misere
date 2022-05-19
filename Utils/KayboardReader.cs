@@ -9,6 +9,27 @@ namespace Nim_misere.Utils
 {
     public static class KayboardReader
     {
+        public static int ReadIntegerFromOptions(string question, List<int> options)
+        {
+            int number;
+            while (true)
+            {
+                Console.WriteLine(question);
+                try
+                {
+                    number = Convert.ToInt32(Console.ReadLine());
+                }
+                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+
+                if (options.IndexOf(number) == -1) Console.WriteLine("This number is not one of the options. Choose again.\n");
+                else
+                {
+                    return number;
+                }
+            }
+           
+        }
+
         public static int ReadPositiveInteger(string question)
         {
             int number;

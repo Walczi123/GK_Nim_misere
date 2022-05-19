@@ -20,28 +20,36 @@ namespace Nim
             var mode = 0;
             Console.WriteLine("\n\n");
 
-            KayboardReader.ReadOption<int>(
-                "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Tests\n3 - Test on choosen board",
+            mode = KayboardReader.ReadOption<int>(
+                "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Demo test with set board (watch two algorithms play on choosen board)\n3 - Multiple test with set board (get statistics of multiple games between two algorithms)\n4 - Tests",
                 new List<int>()
                 {
-                    1,2,3
+                    1,2,3,4
                 }
                 );
-            if(mode == 2)
+            if (mode == 2)
             {
-                var testRunner = new TestRunner();
-                testRunner.Run();
+                var testRunner = new SetBoardTestRunner();
+                testRunner.Run(true);
                 Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
                 return;
             }
             if (mode == 3)
             {
                 var testRunner = new SetBoardTestRunner();
+                testRunner.Run(false);
+                Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
+                return;
+            }
+            if (mode == 4)
+            {
+                var testRunner = new TestRunner();
                 testRunner.Run();
                 Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
                 return;
             }
-            
+
+
             stacksAmount = KayboardReader.ReadPositiveInteger("How many stacks would you like to have?");
 
             stackSizes = KayboardReader.ReadStackSizes(stacksAmount);

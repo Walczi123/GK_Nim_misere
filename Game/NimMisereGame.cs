@@ -67,7 +67,30 @@ namespace Nim_misere.Game
                 }
             }
             this.winner = currentPlayer;
-            Console.WriteLine(currentPlayer.GetWinnerPhrase());
+            if (showResults) Console.WriteLine(currentPlayer.GetWinnerPhrase());
+            return this.state.PlayerMoveFlag;
+        }
+
+        public int StartTest()
+        {
+            IPlayer currentPlayer = this.player1;
+            while (!this.state.AreEmpty())
+            {
+                if (showResults) PrintStacks();
+                var move = currentPlayer.Move(this.state);
+                if (showResults)
+                {
+                    Console.WriteLine($"Player number {this.state.PlayerMoveFlag}:");
+                    currentPlayer.move_info(move);
+                }
+                if (this.checkMove(move))
+                {
+                    this.state.UpdateState(move);
+                    currentPlayer = SwitchPlayer(currentPlayer);
+                }
+                if (showResults) Console.ReadKey();
+            }
+            this.winner = currentPlayer;
             return this.state.PlayerMoveFlag;
         }
 
@@ -114,6 +137,15 @@ namespace Nim_misere.Game
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {
             return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+
+        public static IList<int> Clone(this IList<int> listToClone)
+        {
+            var newList = new List<int>();
+            foreach ( var item in listToClone )
+                newList.Add(item);
+            return newList;
+
         }
     }
 }
