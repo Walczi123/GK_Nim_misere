@@ -25,7 +25,11 @@ namespace Nim_misere.Game
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
+<<<<<<< HEAD
             foreach (int i in this.Stacks)
+=======
+            foreach(int i in this.Stacks)
+>>>>>>> c81631d648c9dc3776efc2b3db955fe2dfd5a524
             {
                 stringBuilder.Append(i.ToString());
                 stringBuilder.Append(',');
@@ -65,11 +69,13 @@ namespace Nim_misere.Game
                     this.state.UpdateState(move);
                     currentPlayer = SwitchPlayer(currentPlayer);
                 }
-
-
             }
             this.winner = currentPlayer;
+<<<<<<< HEAD
             if (showResults) Console.WriteLine(currentPlayer.GetWinnerPhrase());
+=======
+            Console.WriteLine(currentPlayer.GetWinnerPhrase());
+>>>>>>> c81631d648c9dc3776efc2b3db955fe2dfd5a524
             return this.state.PlayerMoveFlag;
         }
 
