@@ -203,8 +203,6 @@ namespace Nim_misere.Test
                 for (int i = 1; i <= testAmounts; i += 1)
                 {
                     var state = new State() { Stacks = stackList.Clone().ToList() };
-                    Console.WriteLine(stackList.ToString());
-                    Console.WriteLine(state.ToString(), stackList);
                     var game = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state, false);
                     int winner = game.Start();
                     if (game?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
@@ -217,14 +215,12 @@ namespace Nim_misere.Test
                 for (int i = 1; i <= testAmounts; i += 1)
                 {
                     var state = new State() { Stacks = stackList.Clone().ToList() };
-                    Console.WriteLine(stackList.ToString());
-                    Console.WriteLine(state.ToString());
                     var game = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new Optimal(), state, false);
                     int winner = game.Start();
                     if (game?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
                 }
-                Console.WriteLine($"MCTS algorithm has won {testAmounts - OptimalWins} times");
-                Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
+                Console.WriteLine($"\nMCTS algorithm has won {testAmounts - OptimalWins} times");
+                Console.WriteLine($"Optimal algorithm has won {OptimalWins} times");
             }
             else
             {
