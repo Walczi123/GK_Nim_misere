@@ -190,7 +190,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
@@ -208,7 +208,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nMCTS algorithm has won {testAmounts - OptimalWins} times");
