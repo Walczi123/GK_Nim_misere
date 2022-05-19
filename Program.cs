@@ -17,7 +17,7 @@ namespace Nim
             var mode = 0;
             Console.WriteLine("\n\n");
 
-            KayboardReader.ReadOption<int>(
+            mode = KayboardReader.ReadOption<int>(
                 "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Tests\n3 - Test on choosen board",
                 new List<int>()
                 {
