@@ -39,7 +39,7 @@ namespace Nim_misere.Game
             this.showResults = showResults;
         }
 
-        public void Start()
+        public int Start()
         {
             IPlayer currentPlayer = this.player1;
             while (!this.state.AreEmpty())
@@ -57,6 +57,7 @@ namespace Nim_misere.Game
             }
             this.winner = currentPlayer;
             Console.WriteLine(currentPlayer.GetWinnerPhrase());
+            return this.state.PlayerMoveFlag;
         }
 
         private bool checkMove(Move move)
