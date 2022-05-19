@@ -103,75 +103,15 @@ namespace Nim_misere.Test
         int playerTwo;
         int mctsIterationsOne;
         int mctsIterationsTwo;
+        int mctsIterations;
 
         public void Run()
         {
             Configure();
             RunTests();
         }
-        
-        private int getPlayer(string playerNumber)
-        {
-            var player = 0;
-            while (true)
-            {
-                Console.WriteLine($"Which algorithm should be {playerNumber}?\n1 - Optimal\n2 - MCTS");
-                try
-                {
-                    player = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+       
 
-                if (player != 1 && player != 2) Console.WriteLine("This number is not one of the options. Choose again.\n");
-                else
-                {
-                    return player;
-                }
-            }
-        }
-
-
-        private int getTestAmount()
-        {
-            var amount = 0;
-            while (true)
-            {
-                Console.WriteLine("How many tests do you want to run?");
-                try
-                {
-                    amount = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (amount <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    return amount;
-                    
-                }
-            }
-        }
-
-        private int getMCTSIterations(string playerNumber)
-        {
-            var mctsIter = 0;
-            while (true)
-            {
-                Console.WriteLine($"Select the number of iterations for {playerNumber} MCTS.");
-                try
-                {
-                    mctsIter = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (mctsIter <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    return mctsIter;
-                    
-                }
-            }
-        }
         private void Configure()
         {
             List<int> stackSizes = new List<int>();
@@ -208,25 +148,23 @@ namespace Nim_misere.Test
                 }
             }
 
-            playerOne = getPlayer("first");
-            playerTwo = getPlayer("second");
-            
-            if (playerOne == 2 && playerTwo == 1)
-                mctsIterationsOne = getMCTSIterations("");
-            if (playerOne == 1 && playerTwo == 2)
-                mctsIterationsTwo = getMCTSIterations("");
+            playerOne = KayboardReader.ReadIntegerFromOptions("Which algorithm should be first?\n1 - Optimal\n2 - MCTS", new List<int> { 1, 2 });
+            playerTwo = KayboardReader.ReadIntegerFromOptions("Which algorithm should be second?\n1 - Optimal\n2 - MCTS", new List<int> { 1, 2 });
+
+            if ((playerOne == 1 && playerTwo == 2) || (playerOne == 2 && playerTwo == 1))
+                mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
             if (playerOne == 2 && playerTwo == 2)
             {
-                mctsIterationsOne = getMCTSIterations("first");
-                mctsIterationsTwo = getMCTSIterations("second");
+                mctsIterationsOne = KayboardReader.ReadPositiveInteger("Select the number of iterations for first MCTS.");
+                mctsIterationsTwo = KayboardReader.ReadPositiveInteger("Select the number of iterations for second MCTS.");
             }
             
             if (playerOne == 1 && playerTwo == 1)
                 testAmounts = 1;
             else
-                testAmounts = getTestAmount();
+                testAmounts = KayboardReader.ReadPositiveInteger("How many tests do you want to run?");
 
-         }
+        }
 
         private void WriteResults(string winner, int stacks, int amounts)
         {
@@ -252,6 +190,7 @@ namespace Nim_misere.Test
         {
             var counter = 1;
             var OptimalWins = 0;
+            var FirstWins = 0;
             Console.WriteLine('\n');
 
             if (playerOne == 1 && playerTwo == 1) {
@@ -260,21 +199,47 @@ namespace Nim_misere.Test
                 int winner = game.Start();
                 Console.WriteLine($"\nAlgorithm that won was playing as {winner}."); 
             }
-            else {
+            else if (playerOne == 1 && playerTwo == 2) {
                 for (int i = 1; i <= testAmounts; i += 1)
                 {
-                    var state = new State() { Stacks = stackList };
-                    var game = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new Optimal(), state, false);
-                    game.Start();
-                    WriteResults(game?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, 0);
+                    var state = new State() { Stacks = stackList.Clone().ToList() };
+                    Console.WriteLine(stackList.ToString());
+                    Console.WriteLine(state.ToString(), stackList);
+                    var game = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state, false);
+                    int winner = game.Start();
                     if (game?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
-                    Console.WriteLine($"{counter}/{testAmounts}");
-                    counter += 1;
                 }
+                Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
+                Console.WriteLine($"MCTS algorithm has won {testAmounts - OptimalWins} times");
+            }
+            else if (playerOne == 2 && playerTwo == 1)
+            {
+                for (int i = 1; i <= testAmounts; i += 1)
+                {
+                    var state = new State() { Stacks = stackList.Clone().ToList() };
+                    Console.WriteLine(stackList.ToString());
+                    Console.WriteLine(state.ToString());
+                    var game = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new Optimal(), state, false);
+                    int winner = game.Start();
+                    if (game?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
+                }
+                Console.WriteLine($"MCTS algorithm has won {testAmounts - OptimalWins} times");
+                Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
+            }
+            else
+            {
+                for (int i = 1; i <= testAmounts; i += 1)
+                {
+                    var state = new State() { Stacks = stackList.Clone().ToList() };
+                    var game = new NimMisereGame(new MCTS(numberOfIteration: mctsIterationsOne), new MCTS(numberOfIteration: mctsIterationsTwo), state, false);
+                    int winner = game.Start();
+                    if (winner == 1) FirstWins += 1;
+                }
+                Console.WriteLine($"\nFirst player has won {FirstWins} times");
+                Console.WriteLine($"Second player has won {testAmounts - FirstWins} times");
             }
 
-            Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
-            Console.WriteLine($"MCTS algorithm has won {counter -1 - OptimalWins} times");
+
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Nim_misere.Player;
+using System.Text;
 
 namespace Nim_misere.Game
 {
@@ -19,6 +20,18 @@ namespace Nim_misere.Game
         public void UpdateState(Move move)
         {
             this.Stacks[move.stackNumber - 1] -= move.amount;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (int i in this.Stacks)
+            {
+                stringBuilder.Append(i.ToString());
+                stringBuilder.Append(',');
+            }
+            stringBuilder.Remove(stringBuilder.Length - 1, 1);
+            return stringBuilder.ToString();
         }
     }
 
@@ -56,7 +69,7 @@ namespace Nim_misere.Game
 
             }
             this.winner = currentPlayer;
-            Console.WriteLine(currentPlayer.GetWinnerPhrase());
+            if (showResults) Console.WriteLine(currentPlayer.GetWinnerPhrase());
             return this.state.PlayerMoveFlag;
         }
 
@@ -103,6 +116,15 @@ namespace Nim_misere.Game
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {
             return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+
+        public static IList<int> Clone(this IList<int> listToClone)
+        {
+            var newList = new List<int>();
+            foreach ( var item in listToClone )
+                newList.Add(item);
+            return newList;
+
         }
     }
 }
