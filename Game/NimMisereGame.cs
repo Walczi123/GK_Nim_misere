@@ -25,7 +25,11 @@ namespace Nim_misere.Game
         public override string ToString()
         {
             StringBuilder stringBuilder = new StringBuilder();
+<<<<<<< HEAD
+            foreach (int i in this.Stacks)
+=======
             foreach(int i in this.Stacks)
+>>>>>>> c81631d648c9dc3776efc2b3db955fe2dfd5a524
             {
                 stringBuilder.Append(i.ToString());
                 stringBuilder.Append(',');
@@ -67,7 +71,11 @@ namespace Nim_misere.Game
                 }
             }
             this.winner = currentPlayer;
+<<<<<<< HEAD
+            if (showResults) Console.WriteLine(currentPlayer.GetWinnerPhrase());
+=======
             Console.WriteLine(currentPlayer.GetWinnerPhrase());
+>>>>>>> c81631d648c9dc3776efc2b3db955fe2dfd5a524
             return this.state.PlayerMoveFlag;
         }
 
@@ -114,6 +122,15 @@ namespace Nim_misere.Game
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {
             return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+
+        public static IList<int> Clone(this IList<int> listToClone)
+        {
+            var newList = new List<int>();
+            foreach ( var item in listToClone )
+                newList.Add(item);
+            return newList;
+
         }
     }
 }
