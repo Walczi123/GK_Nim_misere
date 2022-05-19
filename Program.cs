@@ -2,6 +2,7 @@
 using Nim_misere.Game;
 using Nim_misere.Player;
 using Nim_misere.Test;
+using Nim_misere.Utils;
 
 namespace Nim
 {
@@ -16,18 +17,13 @@ namespace Nim
             var mode = 0;
             Console.WriteLine("\n\n");
 
-            while (true)
-            {
-                Console.WriteLine("Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Tests\n3 - Test on choosen board");
-                try
+            KayboardReader.ReadOption<int>(
+                "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Tests\n3 - Test on choosen board",
+                new List<int>()
                 {
-                    mode = Convert.ToInt32(Console.ReadLine());
+                    1,2,3
                 }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (mode != 1 && mode != 2 && mode != 3) Console.WriteLine("This number is not one of the options. Choose again.\n");
-                else break;
-            }
+                );
             if(mode == 2)
             {
                 var testRunner = new TestRunner();
@@ -43,77 +39,23 @@ namespace Nim
                 return;
             }
             
+            stacksAmount = KayboardReader.ReadPositiveInteger("How many stacks would you like to have?");
 
-            while (true)
-            {
-                Console.WriteLine("How many stacks would you like to have?");
-                try
+            stackSizes = KayboardReader.ReadStackSizes(stacksAmount);
+
+            oponent = KayboardReader.ReadOption<int>(
+                "Which opponent do you choose?\n1 - Optimal\n2 - MCTS",
+                new List<int>()
                 {
-                    stacksAmount = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+                    1,2
+                });
 
-                if (stacksAmount <= 0) Console.WriteLine("It's too few. Choose again.\n");
-                else break;
-            }
-
-            while (true)
-            {
-                Console.WriteLine("How many elements should be on the stacks? /'E.g. 2,3,4 /'");
-                try
+            turn = KayboardReader.ReadOption<int>(
+                "Which player would You like to be?\n1 - First\n2 - Second",
+                new List<int>()
                 {
-                    stackSizes = new List<int>();
-                    var answer = Console.ReadLine();
-                    if (answer == null)
-                        throw new Exception("Empty answer.");
-                    var stacks = answer.Split(",");
-                    if (stacks.Length != stacksAmount)
-                        throw new Exception("Wrong amount of stacks.");
-                    foreach(var stack in stacks)
-                    {
-                        var pars = Int32.TryParse(stack, out var res);
-                        if (pars == false)
-                            throw new Exception("Not a number.");
-                        else
-                        {
-                            if(res > 0)
-                                stackSizes.Add(res);
-                            else
-                                throw new Exception("Negative number.");
-                        }                            
-                    }
-                }
-                catch { Console.WriteLine("This is not a valid option. Choose again.\n"); continue; }
-
-                if (stackSizes.Count <= 0) Console.WriteLine("It's too few. Choose again.\n");
-                else break;
-            }
-
-            while (true)
-            {
-                Console.WriteLine("Which opponent do you choose?\n1 - Optimal\n2 - MCTS");
-                try
-                {
-                    oponent = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (oponent != 1 && oponent != 2) Console.WriteLine("This number is not one of the options. Choose again.\n");
-                else break;
-            }
-
-            while (true)
-            {
-                Console.WriteLine("Which player would You like to be?\n1 - First\n2 - Second");
-                try
-                {
-                    turn = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (turn != 1 && turn != 2) Console.WriteLine("This number is not one of the options. Choose again.\n");
-                else break;
-            }
+                                1,2
+                });
 
             Console.WriteLine("\nYour game begins!\n");
             Thread.Sleep(1000);
