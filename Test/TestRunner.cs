@@ -37,6 +37,18 @@ namespace Nim_misere.Test
             stacksAmountsNumber = KayboardReader.ReadPositiveInteger("In order to check multiple setups of stacks' sizes, it is enabled to select how many test cases with randomized stacks' sizes should be run for every configuration with specified number of stacks. Please, select the number of test cases.");
 
             mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
+
+            Console.WriteLine("\n\n");
+        }
+
+        private string PrintStacks(List<int> stacks)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(var elem in stacks)
+            {
+                sb.Append($"{elem.ToString()},");
+            }
+            return sb.ToString();
         }
 
         private void WriteResults(int winner, string player1, string player2, int stacksNo, List<int> stacks)
@@ -47,14 +59,14 @@ namespace Nim_misere.Test
                 using (StreamWriter sw = File.CreateText(path))
                 {
                     sw.WriteLine("Winner;Player1;Player2;StacksNo;Stacks");
-                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{stacks}");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{PrintStacks(stacks)}");
                 }
             }
             else
             {
                 using (StreamWriter sw = File.AppendText(path))
                 {
-                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{stacks}");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{PrintStacks(stacks)}");
                 }
             }
         }
@@ -89,11 +101,11 @@ namespace Nim_misere.Test
                         WriteResults(winner,mctsLabel,optimalLabel,state.Stacks.Count, state.Stacks);
                         if (winner == 1) MctsOptP1Wins += 1;
                         else MctsOptP2Wins += 1;
-                        game2.Start();
+                        winner = game2.Start();
                         WriteResults(winner, optimalLabel, mctsLabel, state.Stacks.Count, state.Stacks);
                         if (winner == 1) OptMctsP1Wins += 1;
                         else OptMctsP2Wins += 1;
-                        game3.Start();
+                        winner = game3.Start();
                         WriteResults(winner, mctsLabel, mctsLabel, state.Stacks.Count, state.Stacks);
                         if (winner == 1) MctsMctsP1Wins += 1;
                         else MctsMctsP2Wins += 1;
@@ -101,7 +113,7 @@ namespace Nim_misere.Test
                         counter += 3;
                     }
                     var game4 = new NimMisereGame(new Optimal(), new Optimal(), state.Clone(), false);
-                    game4.Start();
+                    winner = game4.Start();
                     WriteResults(winner, optimalLabel, optimalLabel, state.Stacks.Count, state.Stacks);
                     if (winner == 1) OptOptP1Wins += 1;
                     else OptOptP2Wins += 1;
@@ -114,6 +126,8 @@ namespace Nim_misere.Test
             Console.WriteLine($"Second player has won for pair Optimal - MCTS {OptMctsP2Wins} times");
             Console.WriteLine($"First player has won for pair MCTS - MCTS {MctsMctsP1Wins} times");
             Console.WriteLine($"Second player has won for pair MCTS - MCTS {MctsMctsP2Wins} times");
+            Console.WriteLine($"First player has won for pair Optimal- Optimal {OptOptP1Wins} times");
+            Console.WriteLine($"Second player has won for pair Optimal - Optimal {OptOptP2Wins} times");
         }
     }
 
