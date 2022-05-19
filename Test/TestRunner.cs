@@ -166,26 +166,6 @@ namespace Nim_misere.Test
 
         }
 
-        private void WriteResults(string winner, int stacks, int amounts)
-        {
-            string path = @".\NIM_MISERIE_RESULTS.csv";
-            if (!File.Exists(path))
-            {
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine("Winner;Stacks;Amounts");
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-        }
-
         private void RunTests(bool show)
         {
             var counter = 1;
@@ -210,7 +190,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
@@ -228,7 +208,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nMCTS algorithm has won {testAmounts - OptimalWins} times");
