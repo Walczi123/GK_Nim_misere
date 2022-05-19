@@ -71,6 +71,29 @@ namespace Nim_misere.Game
             return this.state.PlayerMoveFlag;
         }
 
+        public int StartTest()
+        {
+            IPlayer currentPlayer = this.player1;
+            while (!this.state.AreEmpty())
+            {
+                if (showResults) PrintStacks();
+                var move = currentPlayer.Move(this.state);
+                if (showResults)
+                {
+                    Console.WriteLine($"Player number {this.state.PlayerMoveFlag}:");
+                    currentPlayer.move_info(move);
+                }
+                if (this.checkMove(move))
+                {
+                    this.state.UpdateState(move);
+                    currentPlayer = SwitchPlayer(currentPlayer);
+                }
+                if (showResults) Console.ReadKey();
+            }
+            this.winner = currentPlayer;
+            return this.state.PlayerMoveFlag;
+        }
+
         private bool checkMove(Move move)
         {
             if (move.stackNumber < 1 || move.stackNumber > this.state.Stacks.Count())
