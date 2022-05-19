@@ -10,8 +10,6 @@ namespace Nim
     {
         static void Main(string[] args)
         {
-            Tests();
-            return;
 
             var stacksAmount = 0;
             List<int> stackSizes = new List<int>();

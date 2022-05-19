@@ -39,22 +39,22 @@ namespace Nim_misere.Test
             mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
         }
 
-        private void WriteResults(string winner, int stacks, int amounts)
+        private void WriteResults(int winner, string player1, string player2, int stacksNo, List<int> stacks)
         {
             string path = @".\NIM_MISERIE_RESULTS.csv";
             if (!File.Exists(path))
             {
                 using (StreamWriter sw = File.CreateText(path))
                 {
-                    sw.WriteLine("Winner;Stacks;Amounts");
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
+                    sw.WriteLine("Winner;Player1;Player2;StacksNo;Stacks");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{stacks}");
                 }
             }
             else
             {
                 using (StreamWriter sw = File.AppendText(path))
                 {
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{stacks}");
                 }
             }
         }
@@ -63,39 +63,57 @@ namespace Nim_misere.Test
         {
             var stacksNoRatio = Math.Ceiling((double)stacksNo / (double)stacksStep);
             var limit = stacksNoRatio * stacksAmountsNumber * configurations * 3;
-            var counter = 2;
-            var OptimalWins = 0;
+            var counter = 3;
+            var MctsMctsP1Wins = 0;
+            var MctsMctsP2Wins = 0;
+            var MctsOptP1Wins = 0;
+            var MctsOptP2Wins = 0;
+            var OptMctsP1Wins = 0;
+            var OptMctsP2Wins = 0;
+            var OptOptP1Wins = 0;
+            var OptOptP2Wins = 0;
+            var mctsLabel = "MCTS";
+            var optimalLabel = "OPTIMAL";
             for (int i = 1; i <= stacksNo; i += stacksStep)
             {
                 for (int j = 1; j <= stacksAmountsNumber; j ++)
                 {
-                    List<int> stacks = new List<int>();
+                    State state = StackGenerator.GenerateRandom(i, stacksSizeLimit);
+                    int winner = 0;
                     for ( int k = 0; k < configurations; k++)
                     {
-                        var state = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                        var state2 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                        var state3 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                        var game1 = new NimMisereGame(new MCTS(numberOfIteration:mctsIterations), new Optimal(), state, false);
-                        var game2 = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state2, false);
-                        var game3 = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new MCTS(numberOfIteration: mctsIterations), state3, false);
-                        game1.Start();
-                        WriteResults(game1?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
-                        if (game1?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
+                        var game1 = new NimMisereGame(new MCTS(numberOfIteration:mctsIterations), new Optimal(), state.Clone(), false);
+                        var game2 = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state.Clone(), false);
+                        var game3 = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new MCTS(numberOfIteration: mctsIterations), state.Clone(), false);
+                        winner = game1.Start();
+                        WriteResults(winner,mctsLabel,optimalLabel,state.Stacks.Count, state.Stacks);
+                        if (winner == 1) MctsOptP1Wins += 1;
+                        else MctsOptP2Wins += 1;
                         game2.Start();
-                        WriteResults(game2?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
-                        if (game2?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
+                        WriteResults(winner, optimalLabel, mctsLabel, state.Stacks.Count, state.Stacks);
+                        if (winner == 1) OptMctsP1Wins += 1;
+                        else OptMctsP2Wins += 1;
                         game3.Start();
-                        WriteResults(game3?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
-                        if (game3?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
+                        WriteResults(winner, mctsLabel, mctsLabel, state.Stacks.Count, state.Stacks);
+                        if (winner == 1) MctsMctsP1Wins += 1;
+                        else MctsMctsP2Wins += 1;
                         Console.WriteLine($"{counter}/{limit}");
-                        counter += 2;
+                        counter += 3;
                     }
-                    var state4 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                    var game4 = new NimMisereGame(new Optimal(), new Optimal(), state4, false);
+                    var game4 = new NimMisereGame(new Optimal(), new Optimal(), state.Clone(), false);
+                    game4.Start();
+                    WriteResults(winner, optimalLabel, optimalLabel, state.Stacks.Count, state.Stacks);
+                    if (winner == 1) OptOptP1Wins += 1;
+                    else OptOptP2Wins += 1;
                 }
             }
-            Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
-            Console.WriteLine($"MCTS algorithm has won {counter -1 - OptimalWins} times");
+            Console.WriteLine($"\nResults:");
+            Console.WriteLine($"First player has won for pair MCTS - Optimal {MctsOptP1Wins} times");
+            Console.WriteLine($"Second player has won for pair MCTS - Optimal {MctsOptP2Wins} times");
+            Console.WriteLine($"First player has won for pair Optimal - MCTS {OptMctsP1Wins} times");
+            Console.WriteLine($"Second player has won for pair Optimal - MCTS {OptMctsP2Wins} times");
+            Console.WriteLine($"First player has won for pair MCTS - MCTS {MctsMctsP1Wins} times");
+            Console.WriteLine($"Second player has won for pair MCTS - MCTS {MctsMctsP2Wins} times");
         }
     }
 
