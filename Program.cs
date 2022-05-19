@@ -10,6 +10,9 @@ namespace Nim
     {
         static void Main(string[] args)
         {
+            Tests();
+            return;
+
             var stacksAmount = 0;
             List<int> stackSizes = new List<int>();
             var oponent = 0;
@@ -85,6 +88,29 @@ namespace Nim
 
             Console.WriteLine("Bye");
             Console.ReadKey();
+        }
+
+        static void Tests()
+        {
+            var results = new List<GameResult>();
+            var state = StackGenerator.GenerateNormal(10, 10);
+            var gameReslut1 = new GameResult("MCTS100", "MCTS100", state.ToString());
+            int player1wins = 0;
+            int player2wins = 0;
+            for(int i = 0; i < 10; i++)
+            {
+                var game = new NimMisereGame(new MCTS(100), new MCTS(100), state.Clone(), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut1.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut1);
+
+
+
+            FileHandler.WriteFile(results);
         }
     }
 }
