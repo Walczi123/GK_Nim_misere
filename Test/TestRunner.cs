@@ -166,26 +166,6 @@ namespace Nim_misere.Test
 
         }
 
-        private void WriteResults(string winner, int stacks, int amounts)
-        {
-            string path = @".\NIM_MISERIE_RESULTS.csv";
-            if (!File.Exists(path))
-            {
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine("Winner;Stacks;Amounts");
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-        }
-
         private void RunTests(bool show)
         {
             var counter = 1;
