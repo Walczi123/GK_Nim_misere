@@ -1,0 +1,11 @@
+1. MCTS100;488;MCTS100;512;random
+2. MCTS500;513;MCTS500;487;random
+3. MCTS1000;522;MCTS1000;478;random
+4. Optimal;1000;MCTS100;0;random
+5. Optimal;1000;MCTS500;0;random
+6. Optimal;1000;MCTS1000;0;random
+7. MCTS100;0;Optimal;1000;random
+8. MCTS500;0;Optimal;1000;random
+9. MCTS1000;0;Optimal;1000;random
+10. Optimal;20;Optimal;0;10,10,10,10,10
+11. Optimal;0;Optimal;20;4,5,8,9
