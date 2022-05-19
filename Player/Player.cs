@@ -55,6 +55,7 @@ namespace Nim_misere.Player
             return "The optimal strategy has won!";
         }
 
+
         public Move Move(State state)
         {
             int ones = 0;
@@ -131,7 +132,7 @@ namespace Nim_misere.Player
 
         public void move_info(Move move)
         {
-            Console.WriteLine("\nAlgorithm chose move: " + move.ToString());
+            Console.WriteLine("Algorithm chose move: " + move.ToString());
         }
 
         public string GetName()

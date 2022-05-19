@@ -69,7 +69,7 @@ namespace Nim_misere.AI
 
         public void move_info(Move move)
         {
-            Console.WriteLine("\nAlgorithm choose move: " + move.ToString());
+            Console.WriteLine("Algorithm choose move: " + move.ToString());
         }
 
         public string GetName()
