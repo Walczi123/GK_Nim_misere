@@ -1,6 +1,7 @@
 ﻿using Nim_misere.AI;
 using Nim_misere.Game;
 using Nim_misere.Player;
+using Nim_misere.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,113 +26,17 @@ namespace Nim_misere.Test
 
         private void Configure()
         {
-            var configs = 0;
-            var stacks = 0;
-            var step = 0;
-            var amounts = 0;
-            var amountStep = 0;
-            var mctsIter = 0;
-            while (true)
-            {
-                Console.WriteLine("How many times should every configuration be repeated?");
-                try
-                {
-                    configs = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+            configurations = KayboardReader.ReadPositiveInteger("How many times should every configuration be repeated?");
 
-                if (configs <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    configurations = configs;
-                    break;
-                }
-            }
+            stacksNo = KayboardReader.ReadPositiveInteger("Select maximum number of stacks. Every number from 1 to the selected number with step will be tested.");
 
-            while (true)
-            {
-                Console.WriteLine("Select maximum number of stacks. Every number from 1 to the selected number with step will be tested.");
-                try
-                {
-                    stacks = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+            stacksStep = KayboardReader.ReadPositiveInteger("Select the step for the number of stacks");
 
-                if (stacks <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    stacksNo = stacks;
-                    break;
-                }
-            }
+            stacksAmounts = KayboardReader.ReadPositiveInteger("Select maximum number of elements on a stacks. Every number from 1 to the selected number with step will be tested.");
 
-            while (true)
-            {
-                Console.WriteLine("Select the step for the number of stacks");
-                try
-                {
-                    step = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
+            stacksAmountsStep = KayboardReader.ReadPositiveInteger("Select the step for the number of elements on a stacks");
 
-                if (step <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    stacksStep = step;
-                    break;
-                }
-            }
-
-            while (true)
-            {
-                Console.WriteLine("Select maximum number of elements on a stacks. Every number from 1 to the selected number with step will be tested.");
-                try
-                {
-                    amounts = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (amounts <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    stacksAmounts = amounts;
-                    break;
-                }
-            }
-
-            while (true)
-            {
-                Console.WriteLine("Select the step for the number of elements on a stacks");
-                try
-                {
-                    amountStep = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (amountStep <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    stacksAmountsStep = amountStep;
-                    break;
-                }
-            }
-
-            while (true)
-            {
-                Console.WriteLine("Select the number of iterations for MCTS.");
-                try
-                {
-                    mctsIter = Convert.ToInt32(Console.ReadLine());
-                }
-                catch { Console.WriteLine("This is not a number. Choose again.\n"); continue; }
-
-                if (mctsIter <= 0) Console.WriteLine("The number has to be positive. Choose again.\n");
-                else
-                {
-                    mctsIterations = mctsIter;
-                    break;
-                }
-            }
+            mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
         }
 
         private void WriteResults(string winner, int stacks, int amounts)
