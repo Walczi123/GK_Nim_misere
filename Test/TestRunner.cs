@@ -15,8 +15,8 @@ namespace Nim_misere.Test
         int configurations;
         int stacksNo;
         int stacksStep;
-        int stacksAmounts;
-        int stacksAmountsStep;
+        int stacksSizeLimit;
+        int stacksAmountsNumber;
         int mctsIterations;
         public void Run()
         {
@@ -26,15 +26,15 @@ namespace Nim_misere.Test
 
         private void Configure()
         {
-            configurations = KayboardReader.ReadPositiveInteger("How many times should every configuration be repeated?");
+            configurations = KayboardReader.ReadPositiveInteger("How many times should every test case with a player relying on random numbers be repeated?");
 
-            stacksNo = KayboardReader.ReadPositiveInteger("Select maximum number of stacks. Every number from 1 to the selected number with step will be tested.");
+            stacksNo = KayboardReader.ReadPositiveInteger("The tests will be run for many test cases. The test cases will have different number of stacks - ranging from 1 to N. Please, select maximum number of stacks - N.");
 
-            stacksStep = KayboardReader.ReadPositiveInteger("Select the step for the number of stacks");
+            stacksStep = KayboardReader.ReadPositiveInteger("In order to reduce the number of test cases, you can select the step for number of stacks. E.g. hhe test will be run for the number of stacks 1, 1+step, 1+2*step, 1+3*step, ... .If you want to run the tests for all consecutive numbers choose the step equal to 1. Please, select the step value. ");
 
-            stacksAmounts = KayboardReader.ReadPositiveInteger("Select maximum number of elements on a stacks. Every number from 1 to the selected number with step will be tested.");
+            stacksSizeLimit = KayboardReader.ReadPositiveInteger("The tests will be run for number of stacks specified above. The sizes of the stack will be randomly chosen. Please, select the maximum size of a stack. This number will be applied to all stacks.");
 
-            stacksAmountsStep = KayboardReader.ReadPositiveInteger("Select the step for the number of elements on a stacks");
+            stacksAmountsNumber = KayboardReader.ReadPositiveInteger("In order to check multiple setups of stacks' sizes, it is enabled to select how many test cases with randomized stacks' sizes should be run for every configuration with specified number of stacks. Please, select the number of test cases.");
 
             mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
         }
@@ -62,31 +62,36 @@ namespace Nim_misere.Test
         private void RunTests()
         {
             var stacksNoRatio = Math.Ceiling((double)stacksNo / (double)stacksStep);
-            var stacksAmountRatio = Math.Ceiling((double)stacksAmounts / (double)stacksAmountsStep);
-            var limit = stacksNoRatio * stacksAmountRatio * configurations * 2;
+            var limit = stacksNoRatio * stacksAmountsNumber * configurations * 3;
             var counter = 2;
             var OptimalWins = 0;
             for (int i = 1; i <= stacksNo; i += stacksStep)
             {
-                for (int j = 1; j <= stacksAmounts; j += stacksAmountsStep)
+                for (int j = 1; j <= stacksAmountsNumber; j ++)
                 {
-                    for( int k = 0; k < configurations; k++)
+                    List<int> stacks = new List<int>();
+                    for ( int k = 0; k < configurations; k++)
                     {
                         var state = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
                         var state2 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
+                        var state3 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
                         var game1 = new NimMisereGame(new MCTS(numberOfIteration:mctsIterations), new Optimal(), state, false);
                         var game2 = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state2, false);
-                        game2.PrintStacks();
+                        var game3 = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new MCTS(numberOfIteration: mctsIterations), state3, false);
                         game1.Start();
                         WriteResults(game1?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
                         if (game1?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
                         game2.Start();
                         WriteResults(game2?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
                         if (game2?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
-                        //Console.Clear();
+                        game3.Start();
+                        WriteResults(game3?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
+                        if (game3?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
                         Console.WriteLine($"{counter}/{limit}");
                         counter += 2;
                     }
+                    var state4 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
+                    var game4 = new NimMisereGame(new Optimal(), new Optimal(), state4, false);
                 }
             }
             Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
