@@ -29,12 +29,16 @@ namespace Nim
             {
                 var testRunner = new SetBoardTestRunner();
                 testRunner.Run(true);
+                Console.WriteLine("Bye");
+                Console.ReadKey();
                 return;
             }
             if (mode == 3)
             {
                 var testRunner = new SetBoardTestRunner();
                 testRunner.Run(false);
+                Console.WriteLine("Bye");
+                Console.ReadKey();
                 return;
             }
             if (mode == 4)
@@ -42,6 +46,8 @@ namespace Nim
                 var testRunner = new TestRunner();
                 testRunner.Run();
                 Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
+                Console.WriteLine("Bye");
+                Console.ReadKey();
                 return;
             }
 
