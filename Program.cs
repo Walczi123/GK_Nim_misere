@@ -10,8 +10,6 @@ namespace Nim
     {
         static void Main(string[] args)
         {
-            Tests();
-            return;
 
             var stacksAmount = 0;
             List<int> stackSizes = new List<int>();
@@ -21,7 +19,7 @@ namespace Nim
             Console.WriteLine("\n\n");
 
             mode = KayboardReader.ReadOption<int>(
-                "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Demo test with set board (watch two algorithms play on choosen board)\n3 - Multiple test with set board (get statistics of multiple games between two algorithms)\n4 - Tests",
+                "Do you want to play the game, run tests or run test on choosen board?\n1 - Play\n2 - Demo test with set board (watch two algorithms play on choosen board)\n3 - Multiple test with set board (get statistics of multiple games between two algorithms)\n4 - Automatic Batch Tests",
                 new List<int>()
                 {
                     1,2,3,4

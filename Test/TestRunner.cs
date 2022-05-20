@@ -15,8 +15,8 @@ namespace Nim_misere.Test
         int configurations;
         int stacksNo;
         int stacksStep;
-        int stacksAmounts;
-        int stacksAmountsStep;
+        int stacksSizeLimit;
+        int stacksAmountsNumber;
         int mctsIterations;
         public void Run()
         {
@@ -26,35 +26,47 @@ namespace Nim_misere.Test
 
         private void Configure()
         {
-            configurations = KayboardReader.ReadPositiveInteger("How many times should every configuration be repeated?");
+            configurations = KayboardReader.ReadPositiveInteger("How many times should every test case with a player relying on random numbers be repeated?");
 
-            stacksNo = KayboardReader.ReadPositiveInteger("Select maximum number of stacks. Every number from 1 to the selected number with step will be tested.");
+            stacksNo = KayboardReader.ReadPositiveInteger("The tests will be run for many test cases. The test cases will have different number of stacks - ranging from 1 to N. Please, select maximum number of stacks - N.");
 
-            stacksStep = KayboardReader.ReadPositiveInteger("Select the step for the number of stacks");
+            stacksStep = KayboardReader.ReadPositiveInteger("In order to reduce the number of test cases, you can select the step for number of stacks. E.g. hhe test will be run for the number of stacks 1, 1+step, 1+2*step, 1+3*step, ... .If you want to run the tests for all consecutive numbers choose the step equal to 1. Please, select the step value. ");
 
-            stacksAmounts = KayboardReader.ReadPositiveInteger("Select maximum number of elements on a stacks. Every number from 1 to the selected number with step will be tested.");
+            stacksSizeLimit = KayboardReader.ReadPositiveInteger("The tests will be run for number of stacks specified above. The sizes of the stack will be randomly chosen. Please, select the maximum size of a stack. This number will be applied to all stacks.");
 
-            stacksAmountsStep = KayboardReader.ReadPositiveInteger("Select the step for the number of elements on a stacks");
+            stacksAmountsNumber = KayboardReader.ReadPositiveInteger("In order to check multiple setups of stacks' sizes, it is enabled to select how many test cases with randomized stacks' sizes should be run for every configuration with specified number of stacks. Please, select the number of test cases.");
 
             mctsIterations = KayboardReader.ReadPositiveInteger("Select the number of iterations for MCTS.");
+
+            Console.WriteLine("\n\n");
         }
 
-        private void WriteResults(string winner, int stacks, int amounts)
+        private string PrintStacks(List<int> stacks)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(var elem in stacks)
+            {
+                sb.Append($"{elem.ToString()},");
+            }
+            return sb.ToString();
+        }
+
+        private void WriteResults(int winner, string player1, string player2, int stacksNo, List<int> stacks)
         {
             string path = @".\NIM_MISERIE_RESULTS.csv";
             if (!File.Exists(path))
             {
                 using (StreamWriter sw = File.CreateText(path))
                 {
-                    sw.WriteLine("Winner;Stacks;Amounts");
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
+                    sw.WriteLine("Winner;Player1;Player2;StacksNo;Stacks");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{PrintStacks(stacks)}");
                 }
             }
             else
             {
                 using (StreamWriter sw = File.AppendText(path))
                 {
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
+                    sw.WriteLine($"{winner};{player1};{player2};{stacksNo};{PrintStacks(stacks)}");
                 }
             }
         }
@@ -62,35 +74,60 @@ namespace Nim_misere.Test
         private void RunTests()
         {
             var stacksNoRatio = Math.Ceiling((double)stacksNo / (double)stacksStep);
-            var stacksAmountRatio = Math.Ceiling((double)stacksAmounts / (double)stacksAmountsStep);
-            var limit = stacksNoRatio * stacksAmountRatio * configurations * 2;
-            var counter = 2;
-            var OptimalWins = 0;
+            var limit = stacksNoRatio * stacksAmountsNumber * configurations * 3;
+            var counter = 3;
+            var MctsMctsP1Wins = 0;
+            var MctsMctsP2Wins = 0;
+            var MctsOptP1Wins = 0;
+            var MctsOptP2Wins = 0;
+            var OptMctsP1Wins = 0;
+            var OptMctsP2Wins = 0;
+            var OptOptP1Wins = 0;
+            var OptOptP2Wins = 0;
+            var mctsLabel = "MCTS";
+            var optimalLabel = "OPTIMAL";
             for (int i = 1; i <= stacksNo; i += stacksStep)
             {
-                for (int j = 1; j <= stacksAmounts; j += stacksAmountsStep)
+                for (int j = 1; j <= stacksAmountsNumber; j ++)
                 {
-                    for( int k = 0; k < configurations; k++)
+                    State state = StackGenerator.GenerateRandom(i, stacksSizeLimit);
+                    int winner = 0;
+                    for ( int k = 0; k < configurations; k++)
                     {
-                        var state = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                        var state2 = new State() { Stacks = Enumerable.Repeat(i, j).ToList() };
-                        var game1 = new NimMisereGame(new MCTS(numberOfIteration:mctsIterations), new Optimal(), state, false);
-                        var game2 = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state2, false);
-                        game2.PrintStacks();
-                        game1.Start();
-                        WriteResults(game1?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
-                        if (game1?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
-                        game2.Start();
-                        WriteResults(game2?.winner?.GetName() ?? throw new Exception("Unexpected result of a game!"), i, j);
-                        if (game2?.winner?.GetName() == "OPTIMAL") OptimalWins += 1;
-                        //Console.Clear();
+                        var game1 = new NimMisereGame(new MCTS(numberOfIteration:mctsIterations), new Optimal(), state.Clone(), false);
+                        var game2 = new NimMisereGame(new Optimal(), new MCTS(numberOfIteration: mctsIterations), state.Clone(), false);
+                        var game3 = new NimMisereGame(new MCTS(numberOfIteration: mctsIterations), new MCTS(numberOfIteration: mctsIterations), state.Clone(), false);
+                        winner = game1.Start();
+                        WriteResults(winner,mctsLabel,optimalLabel,state.Stacks.Count, state.Stacks);
+                        if (winner == 1) MctsOptP1Wins += 1;
+                        else MctsOptP2Wins += 1;
+                        winner = game2.Start();
+                        WriteResults(winner, optimalLabel, mctsLabel, state.Stacks.Count, state.Stacks);
+                        if (winner == 1) OptMctsP1Wins += 1;
+                        else OptMctsP2Wins += 1;
+                        winner = game3.Start();
+                        WriteResults(winner, mctsLabel, mctsLabel, state.Stacks.Count, state.Stacks);
+                        if (winner == 1) MctsMctsP1Wins += 1;
+                        else MctsMctsP2Wins += 1;
                         Console.WriteLine($"{counter}/{limit}");
-                        counter += 2;
+                        counter += 3;
                     }
+                    var game4 = new NimMisereGame(new Optimal(), new Optimal(), state.Clone(), false);
+                    winner = game4.Start();
+                    WriteResults(winner, optimalLabel, optimalLabel, state.Stacks.Count, state.Stacks);
+                    if (winner == 1) OptOptP1Wins += 1;
+                    else OptOptP2Wins += 1;
                 }
             }
-            Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
-            Console.WriteLine($"MCTS algorithm has won {counter -1 - OptimalWins} times");
+            Console.WriteLine($"\nResults:");
+            Console.WriteLine($"First player has won for pair MCTS - Optimal {MctsOptP1Wins} times");
+            Console.WriteLine($"Second player has won for pair MCTS - Optimal {MctsOptP2Wins} times");
+            Console.WriteLine($"First player has won for pair Optimal - MCTS {OptMctsP1Wins} times");
+            Console.WriteLine($"Second player has won for pair Optimal - MCTS {OptMctsP2Wins} times");
+            Console.WriteLine($"First player has won for pair MCTS - MCTS {MctsMctsP1Wins} times");
+            Console.WriteLine($"Second player has won for pair MCTS - MCTS {MctsMctsP2Wins} times");
+            Console.WriteLine($"First player has won for pair Optimal- Optimal {OptOptP1Wins} times");
+            Console.WriteLine($"Second player has won for pair Optimal - Optimal {OptOptP2Wins} times");
         }
     }
 
@@ -166,26 +203,6 @@ namespace Nim_misere.Test
 
         }
 
-        private void WriteResults(string winner, int stacks, int amounts)
-        {
-            string path = @".\NIM_MISERIE_RESULTS.csv";
-            if (!File.Exists(path))
-            {
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine("Winner;Stacks;Amounts");
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = File.AppendText(path))
-                {
-                    sw.WriteLine($"{winner};{stacks};{amounts}");
-                }
-            }
-        }
-
         private void RunTests(bool show)
         {
             var counter = 1;
@@ -210,7 +227,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nOptimal algorithm has won {OptimalWins} times");
@@ -228,7 +245,7 @@ namespace Nim_misere.Test
                     if (lastWinner == "OPTIMAL") OptimalWins += 1;
                 }
                 if (show)
-                    Console.WriteLine($"\n{lastWinner} algorithm has won!");
+                    Console.WriteLine($"\n{lastWinner} algorithm won!");
                 else
                 {
                     Console.WriteLine($"\nMCTS algorithm has won {testAmounts - OptimalWins} times");
