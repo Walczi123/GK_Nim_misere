@@ -10,9 +10,6 @@ namespace Nim
     {
         static void Main(string[] args)
         {
-            Tests();
-            return;
-
 
             var stacksAmount = 0;
             List<int> stackSizes = new List<int>();
@@ -32,14 +29,12 @@ namespace Nim
             {
                 var testRunner = new SetBoardTestRunner();
                 testRunner.Run(true);
-                Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
                 return;
             }
             if (mode == 3)
             {
                 var testRunner = new SetBoardTestRunner();
                 testRunner.Run(false);
-                Console.WriteLine("\nThe results are saved in the file ./NIM_MISERIE_RESULTS.csv");
                 return;
             }
             if (mode == 4)

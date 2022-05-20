@@ -120,14 +120,14 @@ namespace Nim_misere.Test
                 }
             }
             Console.WriteLine($"\nResults:");
-            Console.WriteLine($"First player has won for pair MCTS - Optimal {MctsOptP1Wins} times");
-            Console.WriteLine($"Second player has won for pair MCTS - Optimal {MctsOptP2Wins} times");
-            Console.WriteLine($"First player has won for pair Optimal - MCTS {OptMctsP1Wins} times");
-            Console.WriteLine($"Second player has won for pair Optimal - MCTS {OptMctsP2Wins} times");
-            Console.WriteLine($"First player has won for pair MCTS - MCTS {MctsMctsP1Wins} times");
-            Console.WriteLine($"Second player has won for pair MCTS - MCTS {MctsMctsP2Wins} times");
-            Console.WriteLine($"First player has won for pair Optimal- Optimal {OptOptP1Wins} times");
-            Console.WriteLine($"Second player has won for pair Optimal - Optimal {OptOptP2Wins} times");
+            Console.WriteLine($"First player for pair MCTS - Optimal has won {MctsOptP1Wins} times");
+            Console.WriteLine($"Second player for pair MCTS - Optimal has won {MctsOptP2Wins} times");
+            Console.WriteLine($"First player for pair Optimal - MCTS has won {OptMctsP1Wins} times");
+            Console.WriteLine($"Second player for pair Optimal - MCTS has won {OptMctsP2Wins} times");
+            Console.WriteLine($"First player for pair MCTS - MCTS has won {MctsMctsP1Wins} times");
+            Console.WriteLine($"Second player for pair MCTS - MCTS has won {MctsMctsP2Wins} times");
+            Console.WriteLine($"First player for pair Optimal- Optimal has won {OptOptP1Wins} times");
+            Console.WriteLine($"Second player for pair Optimal - Optimal has won {OptOptP2Wins} times");
         }
     }
 
@@ -169,7 +169,11 @@ namespace Nim_misere.Test
                             throw new Exception("Not a number.");
                         else
                         {
-                            if (res < 1) throw new Exception("Not a number.");
+                            if (res < 1)
+                            {
+                                stackSizes = new List<int>();
+                                throw new Exception("Not a number.");
+                            }
                             else
                                 stackSizes.Add(res);
                         }
