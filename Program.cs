@@ -10,6 +10,9 @@ namespace Nim
     {
         static void Main(string[] args)
         {
+            Tests();
+            return;
+
 
             var stacksAmount = 0;
             List<int> stackSizes = new List<int>();
@@ -92,14 +95,305 @@ namespace Nim
         {
             var results = new List<GameResult>();
 
-            #region mcts 100 vs mcst 100
-            Console.WriteLine("\n Start mcts 100 vs mcst 100");
-            var gameReslut1 = new GameResult("MCTS100", "MCTS100", "random");
+            //#region mcts 100 vs mcst 100
+            //Console.WriteLine("\n Start mcts 100 vs mcst 100");
+            //var gameReslut1 = new GameResult("MCTS100", "MCTS100", "random");
             int player1wins = 0;
             int player2wins = 0;
-            for(int i = 0; i < 1000; i++)
+            //for(int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(100), new MCTS(100), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut1.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut1);
+            //#endregion
+
+            //#region mcts 500 vs mcst 500
+            //Console.WriteLine("\n Start mcts 500 vs mcst 500");
+            //var gameReslut2 = new GameResult("MCTS500", "MCTS500", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(500), new MCTS(500), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut2.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut2);
+            //#endregion
+
+            //#region mcts 1000 vs mcst 1000
+            //Console.WriteLine("\n Start mcts 1000 vs mcst 1000");
+            //var gameReslut3 = new GameResult("MCTS1000", "MCTS1000", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(1000), new MCTS(1000), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut3.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut3);
+            //#endregion
+
+            //#region optimal vs mcst 100
+            //Console.WriteLine("\n Start optimal vs mcst 100");
+            //var gameReslut4 = new GameResult("Optimal", "MCTS100", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new Optimal(), new MCTS(100), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut4.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut4);
+            //#endregion
+
+            //#region optimal vs mcst 500
+            //Console.WriteLine("\n Start optimal vs mcst 500");
+            //var gameReslut5 = new GameResult("Optimal", "MCTS500", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new Optimal(), new MCTS(500), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut5.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut5);
+            //#endregion
+
+            //#region optimal vs mcst 1000
+            //Console.WriteLine("\n Start optiaml vs mcst 500");
+            //var gameReslut6 = new GameResult("Optimal", "MCTS1000", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new Optimal(), new MCTS(1000), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut6.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut6);
+            //#endregion
+
+            //#region mcst 100 vs optimal
+            //Console.WriteLine("\n Start mcst 100 vs optimal");
+            //var gameReslut7 = new GameResult("MCTS100","Optimal", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(100), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut7.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut7);
+            //#endregion
+
+            //#region mcst 500 vs optimal
+            //Console.WriteLine("\n Start mcst 500 vs optimal");
+            //var gameReslut8 = new GameResult("MCTS500", "Optimal", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(500), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut8.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut8);
+            //#endregion
+
+            //#region mcst 1000 vs optimal
+            //Console.WriteLine("\n Start mcst 1000 vs optimal");
+            //var gameReslut9 = new GameResult("MCTS1000", "Optimal", "random");
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    var game = new NimMisereGame(new MCTS(1000), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut9.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut9);
+            //#endregion
+
+            //#region optimal vs optimal
+            //Console.WriteLine("\n Start optimal vs optimal");
+            //var state1 = StackGenerator.GenerateNormal(5, 10);
+            //var gameReslut10 = new GameResult("Optimal", "Optimal", state1.ToString());
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    var game = new NimMisereGame(new Optimal(), new Optimal(), state1.Clone(), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut10.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut10);
+            //#endregion
+
+            //#region optimal vs optimal
+            //Console.WriteLine("\n Start optimal vs optimal");
+            //var state2 = new State() { Stacks = new List<int>() { 4, 5, 8, 9}};
+            //var gameReslut11 = new GameResult("Optimal", "Optimal", state2.ToString());
+            //player1wins = 0;
+            //player2wins = 0;
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    var game = new NimMisereGame(new Optimal(), new Optimal(), state2.Clone(), false);
+            //    if (game.Start() == 1)
+            //        player1wins++;
+            //    else
+            //        player2wins++;
+            //}
+            //gameReslut11.AddReslut(player1wins, player2wins);
+            //results.Add(gameReslut11);
+            //#endregion
+
+            #region optimal vs mcst 100
+            Console.WriteLine("\n Start optimal vs mcst 100");
+            var gameReslut12 = new GameResult("Optimal", "MCTS100", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
             {
-                var game = new NimMisereGame(new MCTS(100), new MCTS(100), StackGenerator.GenerateRandom(10, 10), false);
+                var game = new NimMisereGame(new Optimal(), new MCTS(100), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut12.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut12);
+            #endregion
+
+            #region optimal vs mcst 500
+            Console.WriteLine("\n Start optimal vs mcst 500");
+            var gameReslut13 = new GameResult("Optimal", "MCTS500", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new Optimal(), new MCTS(500), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut13.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut13);
+            #endregion
+
+            #region optimal vs mcst 1000
+            Console.WriteLine("\n Start optiaml vs mcst 500");
+            var gameReslut14 = new GameResult("Optimal", "MCTS1000", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new Optimal(), new MCTS(1000), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut14.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut14);
+            #endregion
+
+            #region mcst 100 vs optimal
+            Console.WriteLine("\n Start mcst 100 vs optimal");
+            var gameReslut15 = new GameResult("MCTS100", "Optimal", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new MCTS(100), new Optimal(), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut15.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut15);
+            #endregion
+
+            #region mcst 500 vs optimal
+            Console.WriteLine("\n Start mcst 500 vs optimal");
+            var gameReslut16 = new GameResult("MCTS500", "Optimal", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new MCTS(500), new Optimal(), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut16.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut16);
+            #endregion
+
+            #region mcst 1000 vs optimal
+            Console.WriteLine("\n Start mcst 1000 vs optimal");
+            var gameReslut17 = new GameResult("MCTS1000", "Optimal", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new MCTS(1000), new Optimal(), StackGenerator.GenerateRandom(3, 3), false);
+                if (game.Start() == 1)
+                    player1wins++;
+                else
+                    player2wins++;
+            }
+            gameReslut17.AddReslut(player1wins, player2wins);
+            results.Add(gameReslut17);
+            #endregion
+
+            #region mcts 100 vs mcst 100
+            Console.WriteLine("\n Start mcts 100 vs mcst 100");
+            var gameReslut1 = new GameResult("MCTS100", "MCTS100", "random3");
+            player1wins = 0;
+            player2wins = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                var game = new NimMisereGame(new MCTS(100), new MCTS(100), StackGenerator.GenerateRandom(3, 3), false);
                 if (game.Start() == 1)
                     player1wins++;
                 else
@@ -111,12 +405,12 @@ namespace Nim
 
             #region mcts 500 vs mcst 500
             Console.WriteLine("\n Start mcts 500 vs mcst 500");
-            var gameReslut2 = new GameResult("MCTS500", "MCTS500", "random");
+            var gameReslut2 = new GameResult("MCTS500", "MCTS500", "random3");
             player1wins = 0;
             player2wins = 0;
             for (int i = 0; i < 1000; i++)
             {
-                var game = new NimMisereGame(new MCTS(500), new MCTS(500), StackGenerator.GenerateRandom(10, 10), false);
+                var game = new NimMisereGame(new MCTS(500), new MCTS(500), StackGenerator.GenerateRandom(3, 3), false);
                 if (game.Start() == 1)
                     player1wins++;
                 else
@@ -128,12 +422,12 @@ namespace Nim
 
             #region mcts 1000 vs mcst 1000
             Console.WriteLine("\n Start mcts 1000 vs mcst 1000");
-            var gameReslut3 = new GameResult("MCTS1000", "MCTS1000", "random");
+            var gameReslut3 = new GameResult("MCTS1000", "MCTS1000", "random3");
             player1wins = 0;
             player2wins = 0;
             for (int i = 0; i < 1000; i++)
             {
-                var game = new NimMisereGame(new MCTS(1000), new MCTS(1000), StackGenerator.GenerateRandom(10, 10), false);
+                var game = new NimMisereGame(new MCTS(1000), new MCTS(1000), StackGenerator.GenerateRandom(3, 3), false);
                 if (game.Start() == 1)
                     player1wins++;
                 else
@@ -141,144 +435,6 @@ namespace Nim
             }
             gameReslut3.AddReslut(player1wins, player2wins);
             results.Add(gameReslut3);
-            #endregion
-
-            #region optimal vs mcst 100
-            Console.WriteLine("\n Start optimal vs mcst 100");
-            var gameReslut4 = new GameResult("Optimal", "MCTS100", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new Optimal(), new MCTS(100), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut4.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut4);
-            #endregion
-
-            #region optimal vs mcst 500
-            Console.WriteLine("\n Start optimal vs mcst 500");
-            var gameReslut5 = new GameResult("Optimal", "MCTS500", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new Optimal(), new MCTS(500), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut5.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut5);
-            #endregion
-
-            #region optimal vs mcst 1000
-            Console.WriteLine("\n Start optiaml vs mcst 500");
-            var gameReslut6 = new GameResult("Optimal", "MCTS1000", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new Optimal(), new MCTS(1000), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut6.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut6);
-            #endregion
-
-            #region mcst 100 vs optimal
-            Console.WriteLine("\n Start mcst 100 vs optimal");
-            var gameReslut7 = new GameResult("MCTS100","Optimal", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new MCTS(100), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut7.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut7);
-            #endregion
-
-            #region mcst 500 vs optimal
-            Console.WriteLine("\n Start mcst 500 vs optimal");
-            var gameReslut8 = new GameResult("MCTS500", "Optimal", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new MCTS(500), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut8.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut8);
-            #endregion
-
-            #region mcst 1000 vs optimal
-            Console.WriteLine("\n Start mcst 1000 vs optimal");
-            var gameReslut9 = new GameResult("MCTS1000", "Optimal", "random");
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                var game = new NimMisereGame(new MCTS(1000), new Optimal(), StackGenerator.GenerateRandom(10, 10), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut9.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut9);
-            #endregion
-
-            #region optimal vs optimal
-            Console.WriteLine("\n Start optimal vs optimal");
-            var state1 = StackGenerator.GenerateNormal(5, 10);
-            var gameReslut10 = new GameResult("Optimal", "Optimal", state1.ToString());
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 20; i++)
-            {
-                var game = new NimMisereGame(new Optimal(), new Optimal(), state1.Clone(), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut10.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut10);
-            #endregion
-
-            #region optimal vs optimal
-            Console.WriteLine("\n Start optimal vs optimal");
-            var state2 = new State() { Stacks = new List<int>() { 4, 5, 8, 9}};
-            var gameReslut11 = new GameResult("Optimal", "Optimal", state2.ToString());
-            player1wins = 0;
-            player2wins = 0;
-            for (int i = 0; i < 20; i++)
-            {
-                var game = new NimMisereGame(new Optimal(), new Optimal(), state2.Clone(), false);
-                if (game.Start() == 1)
-                    player1wins++;
-                else
-                    player2wins++;
-            }
-            gameReslut11.AddReslut(player1wins, player2wins);
-            results.Add(gameReslut11);
             #endregion
 
             FileHandler.WriteFile(results);
