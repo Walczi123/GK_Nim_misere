@@ -17,7 +17,7 @@ namespace Nim_misere.Utils
             var state = new State() { Stacks = new List<int>() };
             Random r = new Random();
             for (int i = 0; i < stackNumber; i++)
-                state.Stacks.Add(r.Next((int)(maxAmountNumber/2), maxAmountNumber));
+                state.Stacks.Add(Math.Max(1,r.Next((int)(maxAmountNumber/2), maxAmountNumber)));
             return state;
         }
     }
